@@ -3,6 +3,7 @@ from usuarios.forms import LoginForms, CadastroForms
 from django.contrib.auth.models import User
 from django.contrib import auth
 import random
+import uuid
 # Create your views here.
 
 def login(request):
@@ -22,7 +23,7 @@ def login(request):
                 auth.login(request, usuario)
                 return redirect("pag_app1")
             else:
-                login_dados.add_error(None, "Usuário ou senha já existem!")
+                login_dados.add_error(None, "Usuário ou senha incorretos!")
                 
         return render(request, 'usuarios/login.html', {"formulario": login_dados})
          
@@ -44,20 +45,27 @@ def cadastro(request):
             formulario_email = formulario_dados["email"].value()
             formulario_senha = formulario_dados["criar_senha"].value()
             primeiro_nome, sobrenome = formulario_dados.pegar_sobrenome()
-            formulario_username = primeiro_nome.lower() + sobrenome.lower() + str(random.randint(0, 100)) + str(random.randint(100, 1000)) + str(random.randint(1000, 100000))
+           
+            # Função para gerar nomes de usuarios
+            def gerar_username(primeiro_nome, sobrenome):
+                username_base = primeiro_nome.lower() + sobrenome.lower()
+                username_unico = f"{username_base}_{uuid.uuid4().hex[:4]}"
+                while User.objects.filter(username = username_unico).exists():
+                    username_unico = f"{username_base}_{uuid.uuid4().hex[:4]}"
+                return username_unico
             
-            
-            if User.objects.filter(email = formulario_email).exists() or User.objects.filter(username = formulario_username).exists():
-                print("erro")
-                formulario_dados.add_error(None, "Email ou usuário já exsitem!")
+            username_gerado = gerar_username(primeiro_nome, sobrenome)
+
+            if User.objects.filter(email = formulario_email).exists():
+                formulario_dados.add_error(None, "Email já cadastrado!")
                 return render(request, "usuarios/cadastro.html", {"formulario": formulario_dados})
             
             usuario = User.objects.create_user(
-                username = formulario_username,
+                username = username_gerado,
                 email = formulario_email,
                 password = formulario_senha,
-                last_name = sobrenome,
-                first_name = primeiro_nome
+                last_name = sobrenome.capitalize(),
+                first_name = primeiro_nome.capitalize()
             )
 
             usuario.save()
@@ -66,3 +74,7 @@ def cadastro(request):
             return render(request, "usuarios/cadastro.html", {"formulario": formulario_dados})
         
     return render(request, 'usuarios/cadastro.html', {"formulario": formulario_cadastro})
+
+def fazer_logout(request):
+    auth.logout(request)
+    return redirect("url_login")
