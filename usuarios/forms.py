@@ -1,6 +1,6 @@
 from django import forms
 class LoginForms(forms.Form):
-    email_login = forms.CharField(
+    email_login = forms.EmailField(
         label = "Digite seu email",
         required = True,
         max_length = 100,
