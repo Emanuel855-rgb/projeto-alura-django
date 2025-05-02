@@ -19,8 +19,8 @@ def login(request):
             usuario = User.objects.filter(email = login_email).first()
             print({usuario})
             if usuario is not None and usuario.check_password(login_senha):
-                messages.success(request, "Login efetuado com sucesso!")
                 auth.login(request, usuario)
+                messages.success(request, "Login efetuado com sucesso!")
                 return redirect("pag_app1")
             else:
                 login_dados.add_error(None, "Usuário ou senha incorretos!")
@@ -77,6 +77,6 @@ def cadastro(request):
     return render(request, 'usuarios/cadastro.html', {"formulario": formulario_cadastro})
 
 def fazer_logout(request):
-    messages.success(request, "Logout efetuado!")
     auth.logout(request)
+    messages.success(request, "Logout efetuado!")
     return redirect("url_login")
