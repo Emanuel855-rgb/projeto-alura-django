@@ -17,7 +17,6 @@ def login(request):
             login_senha = login_dados["senha"].value()
 
             usuario = User.objects.filter(email = login_email).first()
-            print({usuario})
             if usuario is not None and usuario.check_password(login_senha):
                 auth.login(request, usuario)
                 messages.success(request, "Login efetuado com sucesso!")
@@ -37,7 +36,7 @@ def cadastro(request):
         formulario_dados = CadastroForms(request.POST)
         
         if formulario_dados.is_valid():
-            print(formulario_dados)
+            
             formulario_nome = formulario_dados["nome_cadastro"].value()
             formulario_email = formulario_dados["email"].value()
             formulario_senha = formulario_dados["confirmar_senha"].value()
@@ -68,6 +67,7 @@ def cadastro(request):
             usuario.save()
             messages.success(request, f"{usuario.first_name} {usuario.last_name} cadastrado com sucesso!")
             return redirect("url_login")
+        
         else:
             return render(request, "usuarios/cadastro.html", {"formulario": formulario_dados})
         
