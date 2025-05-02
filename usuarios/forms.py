@@ -64,6 +64,15 @@ class CadastroForms(forms.Form):
             }
         )
     )
+    def clean_confirmar_senha(self):
+        senha_1 = self.cleaned_data.get("criar_senha")
+        senha_2 = self.cleaned_data.get("confirmar_senha")
+        if senha_1 and senha_2:
+            if senha_1 != senha_2:
+                raise forms.ValidationError("Por favor, digite senhas iguais!")
+            else:
+                return senha_2
+                
     def clean_nome_cadastro(self):
         nome_sobrenome = self.cleaned_data.get("nome_cadastro")
         for caractere in nome_sobrenome:

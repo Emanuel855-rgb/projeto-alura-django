@@ -37,13 +37,10 @@ def cadastro(request):
         formulario_dados = CadastroForms(request.POST)
         
         if formulario_dados.is_valid():
-            if formulario_dados["criar_senha"].value() != formulario_dados["confirmar_senha"].value():
-                formulario_dados.add_error(None, "Por favor digite senhas iguais!")
-                return render(request, "usuarios/cadastro.html", {"formulario": formulario_dados})
-            
+            print(formulario_dados)
             formulario_nome = formulario_dados["nome_cadastro"].value()
             formulario_email = formulario_dados["email"].value()
-            formulario_senha = formulario_dados["criar_senha"].value()
+            formulario_senha = formulario_dados["confirmar_senha"].value()
             primeiro_nome, sobrenome = formulario_dados.pegar_sobrenome()
            
             # Função para gerar nomes de usuarios
