@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect
 from usuarios.forms import LoginForms, CadastroForms
 from django.contrib.auth.models import User
-from django.contrib import auth
-import random
+from django.contrib import auth, messages
 import uuid
 # Create your views here.
 
@@ -20,6 +19,7 @@ def login(request):
             usuario = User.objects.filter(email = login_email).first()
             print({usuario})
             if usuario is not None and usuario.check_password(login_senha):
+                messages.success(request, "Login efetuado com sucesso!")
                 auth.login(request, usuario)
                 return redirect("pag_app1")
             else:
@@ -69,6 +69,7 @@ def cadastro(request):
             )
 
             usuario.save()
+            messages.success(request, f"{usuario.first_name} {usuario.last_name} cadastrado com sucesso!")
             return redirect("url_login")
         else:
             return render(request, "usuarios/cadastro.html", {"formulario": formulario_dados})
@@ -76,5 +77,6 @@ def cadastro(request):
     return render(request, 'usuarios/cadastro.html', {"formulario": formulario_cadastro})
 
 def fazer_logout(request):
+    messages.success(request, "Logout efetuado!")
     auth.logout(request)
     return redirect("url_login")
