@@ -7,6 +7,11 @@ class Lista(admin.ModelAdmin):
     list_editable = ("publicado",)
     list_display_links = ("id", "nome")
     search_fields = ("nome",)
-    list_filter = ("categoria",)
+    list_filter = ("categoria", "usuario",)
     list_per_page = 10
+    exclude = ('usuario',)
+    def save_model(self, request, obj, form, change):
+        if not change:    
+            obj.usuario = request.user  
+        super().save_model(request, obj, form, change)
 admin.site.register(Fotografia, Lista)
