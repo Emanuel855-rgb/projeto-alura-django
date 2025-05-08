@@ -434,3 +434,7 @@ table {
     --bs-alert-bg: #f8d7da;
     --bs-alert-border-color: #f5c6cb;
 }
+
+.tags__tag a {
+    text-decoration: none; 
+}
