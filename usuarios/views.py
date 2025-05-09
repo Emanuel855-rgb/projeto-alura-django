@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from usuarios.forms import LoginForms, CadastroForms
+from usuarios.forms import LoginForms, CadastroForms, UploadForms
 from django.contrib.auth.models import User
 from django.contrib import auth, messages
 import uuid
@@ -77,3 +77,16 @@ def fazer_logout(request):
     auth.logout(request)
     messages.success(request, "Logout efetuado!")
     return redirect("url_login")
+
+def upload_imagem(request):
+    if request.method == "POST":
+        formulario = UploadForms(request.POST, request.FILES)
+        if formulario.is_valid():
+            fotografia = formulario.save(commit=False)
+            fotografia.usuario = request.user
+            fotografia.save()
+            return redirect('pag_app1')
+    else:
+        formulario = UploadForms()
+
+    return render(request, "usuarios/upload.html", {"formulario": formulario})

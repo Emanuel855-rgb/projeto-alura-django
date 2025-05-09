@@ -1,4 +1,5 @@
 from django import forms
+from app_1.models import Fotografia
 class LoginForms(forms.Form):
     email_login = forms.EmailField(
         label = "Digite seu email",
@@ -91,3 +92,17 @@ class CadastroForms(forms.Form):
         primeiro_nome = partes_nome[0]
         sobrenome = partes_nome[1]
         return primeiro_nome, sobrenome
+    
+class UploadForms(forms.ModelForm):
+    class Meta:
+        model = Fotografia
+        fields = ["nome", "legenda", "descricao", "categoria", "foto", "publicado"]
+        widgets = {
+            'nome': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Digite seu nome'}),
+            'legenda': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Digite a legenda'}),
+            'categoria': forms.Select(attrs={'class': 'form-control'}),
+            'descricao': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Digite a descrição'}),
+            'foto': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'publicado': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }
+

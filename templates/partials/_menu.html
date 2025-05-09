@@ -20,6 +20,7 @@
                 <a href="{% url 'pag_app1' %}"><img src="{% static '/assets/ícones/1x/Home - ativo.png' %}"> Home</a>
                 {% if user.is_authenticated %}
                     <a href="{% url 'url_logout' %}"><img src="{% static '/assets/ícones/1x/Surpreenda-me - inativo.png' %}"> Logout</a>
+                    <a href="{% url 'url_upload' %}"> <img src="{% static '/assets/ícones/1x/upload(2).png'%}" style="width: 35px; height: auto;"> Upload</a>
                 {% else %}
                     <a href="{% url 'url_login' %}"><img src="{% static '/assets/ícones/1x/Mais vistas - inativo.png' %}"> Login</a>
                     <a href="{% url 'url_cadastro' %}"><img src="{% static '/assets/ícones/1x/Novas - inativo.png' %}"> Cadastro</a>
