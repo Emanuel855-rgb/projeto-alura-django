@@ -12,7 +12,7 @@ class Fotografia(models.Model):
         ("PLANETA", "Planeta")
     ]       
 
-    nome = models.CharField(max_length=100, null=False, blank=False) # "null= False" não pode ser um campo vazio, "blank = False" não pode ser algo irrelevante ex: " ".
+    nome = models.CharField(max_length=100, null=False, blank=False)
     legenda = models.CharField(max_length=150, null=False, blank=False)
     categoria = models.CharField(max_length=100, choices=OPCOES_CATEGORIA, default='')
     descricao = models.TextField(null=False, blank=False)
