@@ -3,6 +3,7 @@ from usuarios.forms import LoginForms, CadastroForms, UploadForms
 from django.contrib.auth.models import User
 from django.contrib import auth, messages
 import uuid
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def login(request):
@@ -78,6 +79,7 @@ def fazer_logout(request):
     messages.success(request, "Logout efetuado!")
     return redirect("url_login")
 
+@login_required
 def upload_imagem(request):
     if request.method == "POST":
         formulario = UploadForms(request.POST, request.FILES)
