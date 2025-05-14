@@ -22,10 +22,11 @@
                         </div>
                     {% endif %}
                     <div>
-                        <button class="btn btn-success col-12" style="padding: top 5px;" type="submit">Logar</button>
+                        <button class="btn btn-success col-12" style="padding: top 5px; margin-bottom: 20px;" type="submit">Logar</button> <!-- Adicione margin-bottom -->
                     </div>
-                    <div class="social-media-details">
-                        <a href="http://127.0.0.1:8000/accounts/github/login/?process=login" target=”_blank” >
+                    <div class="social-media-details" style="display: flex; align-items: center;">
+                        <h1 style="margin-right: 10px; color: white;">Fazer login com:</h1>
+                        <a href="http://127.0.0.1:8000/accounts/github/login/?process=login" target="_blank">
                             <img src="{% static '/assets/ícones/1x/github.png' %}" class="github-logo" alt="github-logo" style="width: 30px; height: auto;">
                         </a>
                     </div>
