@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.github',
     'django.contrib.sites',
+    'allauth.socialaccount.providers.google',
 ]
 
 MIDDLEWARE = [
@@ -156,10 +157,20 @@ MESSAGE_TAGS = {
 SOCIALACCOUNT_PROVIDERS = {
     'github': {
         'APP': {
-            'client_id': str(os.getenv('CLIENT_ID_GITHUB')),
-            'secret': str(os.getenv('SECRET_GITHUB')),
+            'client_id': os.getenv('CLIENT_ID_GITHUB'),
+            'secret': os.getenv('SECRET_GITHUB'),
             'key': ''
         }
+    },
+
+    'google': {
+        'APP': {
+            'client_id': os.getenv("CLIENT_ID_GOOGLE"),
+            'secret': os.getenv("SECRET_GOOGLE"),
+            'key': '',
+        },
+        'SCOPE': ['profile', 'email'],
+        'AUTH_PARAMS': {'access_type': 'online'},
     }
 }
 
