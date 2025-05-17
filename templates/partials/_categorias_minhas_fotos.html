@@ -1,0 +1,11 @@
+{% load static %}
+    <section class="tags">
+        <p class="tags__titulo">Busque por tags:</p>
+        <ul class="tags__lista">
+            {% for valor_categoria, forma_exibicao in opcoes_categoria %}
+                <li class="tags__tag">
+                    <a href="{% url 'url_categoria_minhas_fotos' valor_categoria %}" style="text-decoration: none;">{{ forma_exibicao }}</a>
+                </li>
+            {% endfor%}
+        </ul>
+    </section>

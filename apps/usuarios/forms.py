@@ -1,5 +1,5 @@
 from django import forms
-from app_1.models import Fotografia
+from apps.app_1.models import Fotografia
 class LoginForms(forms.Form):
     email_login = forms.EmailField(
         label = "Digite seu email",

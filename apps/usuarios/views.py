@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from usuarios.forms import LoginForms, CadastroForms, UploadForms
+from apps.usuarios.forms import LoginForms, CadastroForms, UploadForms
 from django.contrib.auth.models import User
 from django.contrib import auth, messages
 import uuid
@@ -74,6 +74,7 @@ def cadastro(request):
         
     return render(request, 'usuarios/cadastro.html', {"formulario": formulario_cadastro})
 
+@login_required
 def fazer_logout(request):
     auth.logout(request)
     messages.success(request, "Logout efetuado!")

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from app_1.models import Fotografia
+from apps.app_1.models import Fotografia
 # Register your models here.
 
 class Lista(admin.ModelAdmin):
