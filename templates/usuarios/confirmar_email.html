@@ -1,0 +1,31 @@
+{% extends 'usuarios/base_usuario.html'%}
+{% load static %}
+{% block content %}
+            <section class="galeria" style="margin-left: 5em">
+                <form action="{% url 'url_confirmar_email' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        {% for campo in formulario.visible_fields %}
+                        <div class="col-12 col-lg-12" style="margin-bottom: 10px;">
+                            <label for="{{ campo.id_for_label }}" style="color:#D9D9D9; margin-bottom: 5px;">{{ campo.label }}</label>
+                            {{ campo }}
+                            {% if campo.errors %}
+                                <div class="alert alert-danger">{{ campo.errors }}</div>
+                            {% endif %}       
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% if formulario.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {{ formulario.non_field_errors }}
+                        </div>
+                    {% endif %}
+                    <div>
+                        <button class="btn btn-success col-12" style="padding-top: 5px;" type="submit">Confirmar email</button>
+                    </div>
+                </form>
+            </section>
+        </main>
+    </div>
+</body>
+{% endblock %}

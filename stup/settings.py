@@ -174,6 +174,7 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
+# OAuth
 LOGIN_REDIRECT_URL = 'pag_app1'
 
 SOCIALACCOUNT_LOGIN_ON_GET = True
@@ -181,3 +182,17 @@ SOCIALACCOUNT_LOGIN_ON_GET = True
 ACCOUNT_LOGOUT_ON_GET = True
 
 LOGOUT_REDIRECT_URL = '/'
+
+# Confirmação de email
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST = 'smtp.gmail.com'
+
+EMAIL_PORT = 587
+
+EMAIL_USE_TLS = True
+
+EMAIL_HOST_USER = 'cadastro.confirme.email@gmail.com'
+
+EMAIL_HOST_PASSWORD = "undo qdoa xqvp yaaw"

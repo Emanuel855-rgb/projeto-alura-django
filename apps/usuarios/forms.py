@@ -106,3 +106,15 @@ class UploadForms(forms.ModelForm):
             'publicado': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
         }
 
+class CodigoConfirmacao(forms.Form):
+    codigo_confirmacao = forms.CharField(
+        label="Digite o código que lhe enviamos: ",
+        required = True,
+        max_length= 100,
+        widget = forms.TextInput(
+            attrs = {
+                "class": "form-control",
+                'placeholder': 'Digite seu código'
+            }
+        )
+    )
