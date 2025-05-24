@@ -17,8 +17,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
 
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.github',
     'django.contrib.sites',
     'allauth.socialaccount.providers.google',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -89,8 +90,12 @@ WSGI_APPLICATION = 'stup.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'banco_projeto_django_galeria',
+        'USER': 'admin_emanuel',
+        'PASSWORD': os.getenv("SENHA_POSTGRE"),
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -128,19 +133,6 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
-
-STATIC_URL = '/static/'
-
-STATICFILES_DIRS =[
-    os.path.join(BASE_DIR, 'static')
-]
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'coleta_estaticos')
-
-# Media
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-MEDIA_URL = '/media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -183,7 +175,7 @@ ACCOUNT_LOGOUT_ON_GET = True
 
 LOGOUT_REDIRECT_URL = '/'
 
-# Confirmação de email
+# Confirmação da conta do email de verificaçaõ
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
@@ -196,3 +188,56 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'cadastro.confirme.email@gmail.com'
 
 EMAIL_HOST_PASSWORD = "undo qdoa xqvp yaaw"
+
+# Configurações da AWS. NÃO ESTÁ EM USO NO MOMENTO, POR CAUSA DE PROBLEMAS QUE AINDA NÃO RESOLVI.
+
+AWS_S3_REGION_NAME = 'sa-east-1'
+
+AWS_S3_ENDPOINT_URL = f'https://s3.{AWS_S3_REGION_NAME}.amazonaws.com'
+
+AWS_ACCESS_KEY_ID = os.getenv("CHAVE_DE_ACESSO_USUARIO")
+
+AWS_SECRET_ACCESS_KEY = os.getenv("CHAVE_DE_ACESSO_USUARIO_SECRETA")
+
+AWS_STORAGE_BUCKET_NAME = os.getenv("NOME_MEU_BUCKET")
+
+AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
+
+AWS_DEFAULT_ACL = "public-read"
+
+AWS_S3_FILE_OVERWRITE = False
+
+AWS_DEFAULT_ACL = None
+
+AWS_QUERYSTRING_AUTH = False
+
+AWS_S3_OBJECT_PARAMETERS = {
+    "CacheControl": "max-age=86400"
+}
+
+AWS_LOCATION = "fotos"
+
+AWS_QUERYSTRING_AUTH = False
+
+AWS_HEADERS = {
+    "Access-Control-Allow-Origin": "*",
+}
+
+# Media
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+MEDIA_URL = '/media/'
+
+#MEDIA_URL = f'https://{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/{AWS_LOCATION}/'
+
+
+# Estaticos
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS =[
+    os.path.join(BASE_DIR, 'static')
+]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'coleta_estaticos')
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
